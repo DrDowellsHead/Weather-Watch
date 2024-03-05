@@ -31,6 +31,8 @@ def parse_weather_data(url):
                 data = [td.text.strip() for td in row.find_all('td')]  # Extracting data from each cell in the row
                 df = df._append(pd.Series(data[:4], index=df.columns), ignore_index=True)  # Adding a new row to the DataFrame
 
+            # This function outputs the entire Date Frame
+            #print(df.to_string(index=False))
             return df
 
         else:
