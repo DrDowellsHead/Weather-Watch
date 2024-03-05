@@ -40,6 +40,22 @@ def parse_weather_data(url):
 
 
 def visual_temp(df):
+    df['Дата'] = pd.to_datetime(df['Дата'], format='%d.%m.%Y')
+
+    # Create a month column
+    df['Месяц'] = df['Дата'].dt.to_period('M')
+
+    # Converting the "Average Temperature" column to a number format
+    df['Средняя температура'] = pd.to_numeric(df['Средняя температура'], errors='coerce')
+
+    # We group the data by month and calculate the average, maximum and minimum temperature for each month
+    monthly_stats = df.groupby('Месяц').agg({
+        'Максимальная температура': 'max',
+        'Минимальная температура': 'min',
+        'Средняя температура': 'mean'
+    }).reset_index()
+
+    print(monthly_stats)
     """
         Visualizes the temperature data from the DataFrame.
 
